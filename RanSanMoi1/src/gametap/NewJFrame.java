@@ -80,7 +80,7 @@ public class NewJFrame extends javax.swing.JFrame {
         hard.setText("Khó");
         getContentPane().add(hard, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 330, -1, -1));
 
-        MAP.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3" }));
+        MAP.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vô hạn", "Nhà máy", "Mê cung" }));
         MAP.setToolTipText("");
         getContentPane().add(MAP, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 380, 90, 30));
 
@@ -96,11 +96,11 @@ public class NewJFrame extends javax.swing.JFrame {
         int map =1;
         String level = "DỄ";
         map = MAP.getSelectedIndex() + 1 ;
-        int speed=250;
+        int speed=200;
         if(easy.isSelected())
-            speed = 250;
+            speed = 200;
         if(medi.isSelected()){
-            speed = 180;
+            speed = 160;
             level = "TRUNG BÌNH";
         }
    

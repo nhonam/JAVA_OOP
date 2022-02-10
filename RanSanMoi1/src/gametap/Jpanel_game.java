@@ -42,6 +42,15 @@ public class Jpanel_game extends JPanel implements Runnable{
         bg[ran.ToaDoMoi().x][ran.ToaDoMoi().y]=2;
         thread.start();
     }  
+     
+    public void  resetBg(){
+         for(int i=0;i<20;i++){
+             for(int j=0;i<20;j++)
+             {
+                 bg[i][j]=0;
+             }
+         }
+     }
 
     public String getLevel() {
         return level;
@@ -102,7 +111,7 @@ public class Jpanel_game extends JPanel implements Runnable{
                     g.drawImage(Data.Worm.getCurrentImage(),i*20+1,j*20+1, null);
                 }
                 //vẽ vật cản
-              
+                
                 if(bg[i][j]==3){
                     g.setColor(Color.black);
                     g.fillRect(i*20+1,j*20+1, 18, 18);
@@ -112,19 +121,56 @@ public class Jpanel_game extends JPanel implements Runnable{
             }
     }
      
-      public void paintBg2(Graphics g){
-        g.setColor(Color.GREEN);
+       public void paintBg2(Graphics g){
+        g.drawImage(Data.bg,0,0, null);
+        
+        for(int i=5;i<=14;i++){
+                    bg[0][i]=3;
+                    bg[19][i]=3;
+                    bg[i][0]=3;
+                    bg[i][19]=3;
+                }
+        
         for(int i=0;i<20;i++)
             for(int j=0;j<20;j++){
-                g.fillRect(i*20+1,j*20+1, 18, 18);
+                //mồi
+                if(bg[i][j] == 2){
+                    g.drawImage(Data.Worm.getCurrentImage(),i*20+1,j*20+1, null);
+                }
+                //vẽ vật cản
+ 
+                if(bg[i][j]==3){
+                    g.setColor(Color.yellow);
+                    g.fillRect(i*20+1,j*20+1, 18, 18);
+                  //  g.setColor(Color.yellow);
+                }
+                  
             }
     }
       
-       public void paintBg3(Graphics g){
-        g.setColor(Color.gray);
+         public void paintBg3(Graphics g){
+             
+         for(int i=0;i<=19;i++){
+                    bg[0][i]=3;
+                    bg[19][i]=3;
+                    bg[i][0]=3;
+                    bg[i][19]=3;
+                }
+        g.drawImage(Data.bg,0,0, null);
         for(int i=0;i<20;i++)
             for(int j=0;j<20;j++){
-                g.fillRect(i*20+1,j*20+1, 18, 18);
+                //mồi
+                if(bg[i][j] == 2){
+                    g.drawImage(Data.Worm.getCurrentImage(),i*20+1,j*20+1, null);
+                }
+                //vẽ vật cản
+              
+                if(bg[i][j]==3){
+                    g.setColor(Color.BLUE);
+                    g.fillRect(i*20+1,j*20+1, 18, 18);
+                   // g.setColor(Color.yellow);
+                }
+                  
             }
     }
     
@@ -150,16 +196,17 @@ public class Jpanel_game extends JPanel implements Runnable{
     
     public void ListPlayer(Graphics g){
          g.setColor(Color.white);
-         Collections.sort(JFrame_main.player, (Player o1, Player o2) -> {
+         Collections.sort(JFrame_main.player_list, (Player o1, Player o2) -> {
              // TODO Auto-generated method stub
              if(o1.getDiem() < o2.getDiem()) return -1;
              return 1;
          });
          g.setFont(g.getFont().deriveFont(15.0f));
-        for(int i=0;i<JFrame_main.player.size();i++){
-            if(JFrame_main.player.get(i).getLevel().equalsIgnoreCase(level))
+         int len = JFrame_main.player_list.size();
+        for(int i=0;i< len;i++){
+            if(JFrame_main.player_list.get(i).getLevel().equalsIgnoreCase(level))
             {
-                g.drawString(JFrame_main.player.get(i).toString(), 420, 50+i*10);
+                g.drawString(JFrame_main.player_list.get(i).toString(), 420, 150+i*10);
             }
         }
         
@@ -171,7 +218,7 @@ public class Jpanel_game extends JPanel implements Runnable{
         if(!isPlaying){
                 g.setColor(Color.white);
                 g.setFont(g.getFont().deriveFont(18.0f));
-                g.drawString("Ấn SPACE để tiếp tục chơi!", 80, 400);
+                g.drawString("Ấn SPACE để tiếp tục chơi!", 80, 450);
             }
         if(isOver){
              g.setColor(Color.white);
@@ -183,8 +230,6 @@ public class Jpanel_game extends JPanel implements Runnable{
          g.setColor(Color.red);
             g.setFont(g.getFont().deriveFont(28.0f));
             g.drawString("LEVEL: " + level , 450, 35);
-           
-           
             g.setColor(Color.MAGENTA);
             g.setFont(g.getFont().deriveFont(20.0f));
             g.drawString("SCORE: " + diem, 470, 65);

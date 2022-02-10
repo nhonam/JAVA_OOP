@@ -5,11 +5,13 @@
  */
 package gametap;
 
+import java.io.Serializable;
+
 /**
  *
  * @author nhona
  */
-public class Player {
+public class Player implements Serializable{
     
     private String name;
     private String level;

@@ -17,6 +17,7 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -27,14 +28,12 @@ public class JFrame_main extends JFrame{
         public static int Y = 500; 
         
         public Jpanel_game game;
-        public static ArrayList<Player> player = new ArrayList<>();;
-    public JFrame_main(int map, int speed,String level){ 
+        public static ArrayList<Player> player_list ;
+        public JFrame_main(int map, int speed,String level){ 
         setSize(X,Y);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-       // player = 
+      
         ReadData();
-       
+        player_list = new ArrayList<>();
         game = new Jpanel_game();
         game.setMap(map);
         game.setSpeed(speed);
@@ -45,6 +44,19 @@ public class JFrame_main extends JFrame{
             @Override
             public void windowClosing(WindowEvent e) {
                 WriteData();
+//                Jpanel_game.isPlaying = false;
+                game.ran. resetGame();     // lỗi ở đây     
+//                Jpanel_game.isOver = true; 
+                
+                
+                Jpanel_game.isPlaying = false;
+                Jpanel_game.isOver = true; 
+                
+                JOptionPane.showMessageDialog(game,"BẠN ĐÃ BỊ XỬ THUA!");
+
+                String name = JOptionPane.showInputDialog("NHẬP VÀO TÊN CỦA BẠN!!!");
+                JFrame_main.player_list.add(new Player(name, Jpanel_game.diem, Jpanel_game.level)); 
+               
             }
         
         });
@@ -63,12 +75,12 @@ public class JFrame_main extends JFrame{
              if(e.getKeyCode() == KeyEvent.VK_SPACE){
                    Jpanel_game.isPlaying = !Jpanel_game.isPlaying;
                 if( Jpanel_game.isOver) {
-                    Jpanel_game.isOver = false;
-                    
-                    game.ran. resetGame();
+                    Jpanel_game.isOver = false;      
+                    game.ran. reset();
+                    Jpanel_game.isPlaying = true;
                 }
-             }
-              
+                
+             }  
              if(e.getKeyCode() == KeyEvent.VK_UP)
                 game.ran.setDirec(Ran.GO_UP);
             if(e.getKeyCode() == KeyEvent.VK_DOWN)
@@ -88,13 +100,13 @@ public class JFrame_main extends JFrame{
             FileOutputStream out = null;
             ObjectOutput Obj = null;
                     try {
-                        out = new FileOutputStream("C:\\Program Files\\NetBeans-12.4\\NetBeansProjects\\RanSanMoi1\\src\\img\\player.txt");
+                        out = new FileOutputStream("src\\img\\player.DAT");
                         Obj = new ObjectOutputStream(out);
-                        Obj.writeObject(player);
-                       System.err.println("save to file sucessfull!");
+                        Obj.writeObject(player_list);
+                     
                     } catch (IOException e) {
                         //TODO: handle exception
-                        System.out.println("lôi ghi file");
+                        
                     } finally {
                         if(out != null) {
                             try {
@@ -121,13 +133,13 @@ public class JFrame_main extends JFrame{
          FileInputStream in = null;
                 ObjectInputStream Objin = null;
                 try {
-                    in = new FileInputStream("C:\\Program Files\\NetBeans-12.4\\NetBeansProjects\\RanSanMoi1\\src\\img\\player.txt");
+                    in = new FileInputStream("src\\img\\player.DAT");
                     Objin = new ObjectInputStream(in);
-                    player = (ArrayList<Player>) Objin.readObject();
-                      System.err.println("read to file sucessfull!");
+                    player_list = (ArrayList<Player>) Objin.readObject();
+                     
                 } catch (Exception e) {
                     //TODO: handle exception
-                    System.err.println("loi doc file");
+                   
                 } finally {
                     if(in != null) {
                         try {

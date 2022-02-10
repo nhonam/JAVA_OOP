@@ -13,25 +13,16 @@ import java.util.ArrayList;
  * @author nhona
  */
 public class Animation {
-//    public Image[] image;
-//    public int n; // so luong hinh
     
     ArrayList images; 
     public int currentImage;
-    
-    
+      
     public Animation(){
        images= new ArrayList<Image>();
         currentImage=0;
     }
     
-    public void addImage(Image img){
-//        Image[] ar = image;
-//        image = new Image[n+1];
-//        
-//        for(int i=0;i<n;i++) image[i]=ar[i];
-//        image[n]=img;
-//        n++;
+    public void addImage(Image img){    
           images.add(img);
     }
     

@@ -5,6 +5,7 @@
  */
 package gametap;
 
+import static gametap.Jpanel_game.bg;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -16,7 +17,6 @@ import javax.swing.JOptionPane;
  * @author nhona
  */
 public class Ran implements Runnable{
-    
     
     private int x [];
     private int y [] ;
@@ -43,11 +43,13 @@ public class Ran implements Runnable{
         y[1]=3;
         x[2]=5;
         y[2]=2;
+      
     }
     
-    public void resetGame(){
+    public void reset(){
         x = new int[20];
         y= new int[20];
+       
         x[0]=5;
         y[0]=4;
         x[1]=5;
@@ -55,6 +57,49 @@ public class Ran implements Runnable{
         x[2]=5;
         y[2]=2;
         leng=3;
+         this.direc=Ran.GO_DOWN;
+        Jpanel_game.diem =0;
+    }
+    
+    public void resetGame_kmoi(){
+        x = new int[20];
+        y= new int[20];
+        for(int i=0;i<20;i++){
+             for(int j=0;j<20;j++)
+             {
+                 if(bg[i][j]!=2)
+                    bg[i][j]=0;
+             }
+         }
+        x[0]=5;
+        y[0]=4;
+        x[1]=5;
+        y[1]=3;
+        x[2]=5;
+        y[2]=2;
+        leng=3;
+         this.direc=Ran.GO_DOWN;
+        Jpanel_game.diem =0;
+    }
+    
+    public void resetGame(){
+        x = new int[20];
+        y= new int[20];
+        for(int i=0;i<20;i++){
+             for(int j=0;j<20;j++)
+             {
+                
+                    bg[i][j]=0;
+             }
+         }
+        x[0]=5;
+        y[0]=4;
+        x[1]=5;
+        y[1]=3;
+        x[2]=5;
+        y[2]=2;
+        leng=3;
+         this.direc=Ran.GO_DOWN;
         Jpanel_game.diem =0;
     }
     
@@ -87,28 +132,30 @@ public class Ran implements Runnable{
     
     void update(int speed){
 
-             Data.HeadGoup.update();
-            Data.HeadGoDown.update();
-            Data.HeadGoLeft.update();
-            Data.HeadGoRight.update();
+        Data.HeadGoup.update();
+        Data.HeadGoDown.update();
+        Data.HeadGoLeft.update();
+        Data.HeadGoRight.update();
            
         //rắn ăn mồi
         if(Jpanel_game.bg[x[0]][y[0]] == 2 ){
-             Jpanel_game.diem =  Jpanel_game.diem + 10; 
-            leng++;
+           Jpanel_game.diem =  Jpanel_game.diem + 10; 
+           leng++;
            Jpanel_game.bg[x[0]][y[0]] = 0;
            //random mồi tiếp theo
            Jpanel_game.bg[ToaDoMoi().x][ToaDoMoi().y]=2;
             
-        };
+        }
         //trúng chứng ngại vật hoặc cắn trúng thân sẽ thua
-         for(int i=1;i<leng;i++){
-             if(x[0]==x[i] && y[0]==y[i] ||Jpanel_game.bg[x[0]][y[0]] == 3){
-                 String name = JOptionPane.showInputDialog("NHẬP VÀO TÊN CỦA BẠN!!!");
-                 JFrame_main.player.add(new Player(name, Jpanel_game.diem, Jpanel_game.level));
-                 Jpanel_game.isPlaying = false;
-                 Jpanel_game.isOver = true;
-               
+        for(int i=1;i<leng;i++){
+            if(x[0]==x[i] && y[0]==y[i] ||Jpanel_game.bg[x[0]][y[0]] == 3){
+                Jpanel_game.isPlaying = false;
+                Jpanel_game.isOver = true; 
+                String name = JOptionPane.showInputDialog("NHẬP VÀO TÊN CỦA BẠN!!!");
+                JFrame_main.player_list.add(new Player(name, Jpanel_game.diem, Jpanel_game.level)); 
+                resetGame_kmoi();
+              
+            
              }
          }
         
